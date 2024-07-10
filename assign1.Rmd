@@ -1,0 +1,85 @@
+---
+title: "ASSIGNMENT"
+author: "nandhini"
+date: "July 11, 2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(ISLR)
+```
+
+```{r}
+?Auto
+```
+
+```{r}
+auto=na.omit(Auto)
+```
+#A)Which of the predictors are quantitative, and which are qualitative?
+```{r}
+str(auto)
+```
+mpg,cylinders,dispalcement,horsepower,weight,acceleration and year is quantitative.
+name  and orgin is qualitative.
+
+#B)What is the range of each quantitative predictor? You can answer this using the range() function.
+
+
+```{r}
+?range
+```
+
+```{r}
+quantitative_predictors <- c("mpg", "displacement", "horsepower", "weight", "acceleration", "year")
+
+```
+
+```{r}
+range()
+```
+#C)What is the mean and standard deviation of each quantitative predictor? 
+
+
+```{r}
+sapply(auto[, quantitative_predictors], function(x) signif(c(mean(x), sd(x)), 2))
+```
+
+
+#D)Now remove the 10th through 85th observations. What is the range, mean, and standard deviation of each predictor in the subset of the data that remains? 
+
+```{r}
+output <- sapply(auto[-10:-85, quantitative_predictors], function(x) round(c(range(x), mean(x), sd(x)), 2))
+rownames(output) <- c("min", "max", "mean", "sd")
+output
+```
+
+#E)Using the full data set, investigate the predictors graphically, using scatterplots or other tools of your choice. Create some plots highlighting the relationships among the predictors. Comment on your findings.
+
+```{r}
+library(pheatmap)
+```
+
+```{r}
+pheatmap(t(scale(as.matrix(auto[, quantitative_predictors]))), 
+         annotation=auto["origin"],
+         show_colnames=FALSE)
+```
+
+
+#F)Suppose that we wish to predict gas mileage (mpg) on the basis of the other variables. Do your plots suggest that any of the other variables might be useful in predicting mpg? Justify your answer
+
+```{r}
+Yes,it would appear that year,acceleration,and origin would be decent predictors of mpg.
+```
+```{r}
+
+```
+
+
+
+
+
